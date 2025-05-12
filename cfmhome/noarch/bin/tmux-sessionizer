@@ -1,0 +1,68 @@
+#!/bin/bash
+
+set -e
+PRJ_PATH="$HOME/projets:$HOME/nfsHome/projets:/tmp2"
+
+function list_prj() (
+	# space friendly function
+	# returns a list with the following format :
+	# 	/full/project/path/name;name
+	# 	/full/project/path/name;name[-id]
+	function subFind() {
+		OIFS=$IFS
+		IFS=':' # loop over ':' instead of spaces
+		for mdir in $(echo "$PRJ_PATH"); do
+			find "$mdir" -mindepth 1 -maxdepth 1 -type d
+		done
+		IFS=$OIFS
+	}
+
+	subFind |
+	awk '
+	# project name conflict disambiguation
+	# add a suffix number if name conflict
+	{
+		n=split($0, f, /\//);
+		name=f[n];
+		fname=$0;
+		b[ name ][ length( b[name] ) ] = fname
+	}
+	END {
+		for(name in b){
+			l=length(b[name]);
+			for(i=0; i<l; i++){
+				if(1==l) {
+					print b[name][i] ";" name
+				} else {
+					print b[name][i] ";" name "-" i
+				}
+			}
+		}
+	}' |
+	sed  "s|$PWD/||g" # just get the relative name
+)
+
+function prj_menu() {
+	list_prj | cut -d\; -f1 | fzf \
+		--scheme=path --margin=5%  \
+		--preview='test -f {}/README* && less {}/README* || stat {}' \
+		--preview-label='[ Preview ]' \
+		--preview-label-pos='3:bottom'
+
+}
+
+dir="$(prj_menu)"
+prj="$( list_prj | grep "^$dir;" | cut -d\; -f2 )"
+cd "$dir"
+
+if [ -n "$TMUX" ]; then
+	if tmux has-session -t="$prj"; then
+		tmux switch -t "$prj"
+	else
+		tmux  new-session -d -s "$prj" \; switch-client -t "$prj"
+	fi
+else
+	tmux new-session -A -D -s "$prj"
+fi
+
+
