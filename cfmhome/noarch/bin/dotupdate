@@ -157,7 +157,6 @@ function applyConf
 			echo "Warning: \"$dst\" needs to be updated"
 			$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
 		    fi
-		    echo
 		fi
 	    else
 		$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
@@ -172,11 +171,6 @@ function applyConf
 applyConf
 
 # TODO
-# 	.ssh/config
-#	lever des warnings si des fichiers ne sont pas dans git
-#	lever des warnings si dest est plus récent
-#	ajouter un log des operations
-#
 # file format for attributes :
 # XXX._attr
 # 	PERM
