@@ -4,22 +4,22 @@
 
 # Define the time that all windows monitored for silence should
 # wait before displaying a message. Default 30 seconds.
-  silencewait 15   
+silencewait 15
 
 # Ensures that the default shell is the same as the value of the $SHELL env variable
-  shell -$SHELL
+shell -$SHELL
 
 # Pretty status bar at the bottom.
 # caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= @%H - %LD %d %LM - %c"
-#hardstatus alwayslastline 
+#hardstatus alwayslastline
 #hardstatus string "%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m/%d %{W}%c %{g}]"
 
 # Don't you want to start programs which need a DISPLAY ?
 #setenv DISPLAY ':0'
 
 # Default Buffers
-#screen -t Shell1 0 
-screen 0 
+#screen -t Shell1 0
+screen 0
 #select 0
 
 vbell off                         # no bell
@@ -33,6 +33,8 @@ bufferfile $HOME/.screenex        # the file to use for "readbuf" ('<') and  "wr
 deflogin on                       # log new screen windows in utmp
 term screen-256color              # set $TERM
 termcapinfo rxvt* ti@:te@:XT      # improve mouse scrolling,
+termcapinfo xterm* ti@:te@:XT      # improve mouse scrolling,
+
 altscreen on                      # and text will go into terminal scrollback buffer
 ##screen -t "User" 0 zsh           # default windows
 ##screen -t "Emacs" 1 emacs -nw
