@@ -1,0 +1,188 @@
+#!/bin/bash
+set -e
+DEBUG=""
+
+scriptName="$(readlink -f "$(type -p "$0")")"
+LIBEXEC="$(dirname "$scriptName")/libexec/$(basename "$scriptName")"
+# test -d "$LIBEXEC" || echo "[$0] ERROR: missing $LIBEXEC directory" >&2
+
+
+# START:
+# 	- detecter le path
+# 	- DOT_REFDIR=
+# 	- DOT_BASEDIR=$HOME
+
+
+function usage(){
+    cat <<EOF
+Usage:
+	$(basename $0) [-h] [-d] [--trace]
+
+	where
+		--trace	:
+		-d	: debug; don't launch any command
+		-h	: display this message
+		-i	: install
+
+EOF
+}
+
+ARG_LIST=( 'h' 'd' 'n:' 'trace')
+opts=$(getopt \
+	   -a --longoptions "$(printf "%s," "${ARG_LIST[@]}")" \
+	   --name "$(basename "$0")" \
+	   --options "" \
+	   -- "$@"
+)
+
+if [ "$?" -ne 0 ]; then
+    echo 1>&2
+    usage 1>$2
+    exit 1
+fi
+eval set --$opts
+
+
+while true; do
+    case "$1" in
+	--n)
+	    shift
+	    name="$1"
+	    ;;
+	--h)
+	    usage
+	    exit 0
+	    ;;
+	--d)
+	    DEBUG=echo
+	    ;;
+	--trace)
+	    set -x
+	    ;;
+	--)
+	    shift
+	    break
+	    ;;
+	*)
+	    usage 1>&2
+	    exit 1
+	    ;;
+    esac
+    shift
+done
+
+# Get the architecture
+type -t init >/dev/null && MyInit="$(type -p init)"
+test -z "$MyInit" && test -e "/usr/sbin/init" && MyInit="/usr/sbin/init"
+
+readelf -h  "$MyInit" |  grep 'Machine' | cut -d: -f2 | grep -qi AArch64 && ARCH=aarch64
+readelf -h  "$MyInit" |  grep 'Machine' | cut -d: -f2 | grep -qi x86-64 && ARCH=x86_64
+
+test -e /etc/lsb-release && . /etc/lsb-release
+
+#
+# Strat:
+# - get $REFDIR from git
+# - avoir un moyen de stocker des droits d'accès
+#
+
+if [ -z "${DOT_REFDIR}" ]; then
+    echo "Env variable \$DOT_REFDIR not provided as argument"
+    DOT_REFDIR="$PWD"
+    read -p "Select your Reference directory [${DOT_REFDIR}]: " dir
+    if [ -n "$dir" ]; then
+	DOT_REFDIR="$dir"
+    fi
+fi
+
+if [ ! -d "${DOT_REFDIR}" ]; then
+    echo "[ERROR] cannot acces '${DOT_REFDIR}': No such file or directory" >&2
+    exit 1
+fi
+
+cd "${DOT_REFDIR}"
+
+if [ ! -d 'noarch' -o ! -f 'config' ]; then
+    if [ "$(find | wc -l)" -gt 1 ]; then
+	echo "[ERROR] '${DOT_REFDIR}' is not an initialyzed repository and is not empty" >&2
+	exit 2
+    fi
+
+    read -p "Initialize directory in \"$PWD\" ? (y/N)" doInstall
+    if [ ! -n "$doInstall" -o "$doInstall" != "y" ]; then
+	exit 3
+    fi
+
+    # Initialization
+    $DEBUG mkdir -vp noarch "$ARCH" noarch/.bashrc.d
+    echo
+    cat >config <<EOF
+DOT_BASEDIR='~'
+EOF
+
+fi
+
+if [ -z "${DOT_BASEDIR}" ]; then
+    if [ -f config ]; then
+	. config
+    fi
+    if [ "${DOT_BASEDIR}" == '~' ]; then
+	DOT_BASEDIR="$HOME"
+    fi
+
+fi
+
+function applyConf
+{
+    cd noarch
+    while read -u 3 -d $'\0' file
+    do
+	dst="${DOT_BASEDIR}/$file"
+
+	if [ -d "$file" ]; then
+	    if [ ! -e "$dst" ]; then
+		$DEBUG mkdir -v "$dst"
+	    fi
+	elif [ -f "$file" ]; then
+	    if [ -e "$dst" ]; then
+		if ! fileDate="$(git log -1 --pretty="format:%ct" "$file" 2>/dev/null)"; then
+		    fileDate="$(stat -c'%Y' "$file")"
+		fi
+		dstDate="$(stat -c'%Y' "$dst")"
+		if [ "$dstDate" -ne "$fileDate" ]; then
+		    if [ "$dstDate" -gt "$fileDate" ]; then
+			echo "Warning: \"$dst\" newer than \"$file\""
+		    elif ! diff "$dst" "$file" > /dev/null; then
+			git diff --no-index "$dst" "$file" || true
+			echo "Warning: \"$dst\" needs to be updated"
+			$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
+		    fi
+		    echo
+		fi
+	    else
+		$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
+	    fi
+	fi
+
+	# check permision in $file._perm
+
+    done 3< <( find -not -name '*~' -not -name '.swp' -not -name '.' -printf '%P\0' )
+}
+
+applyConf
+
+# TODO
+# 	.ssh/config
+#	lever des warnings si des fichiers ne sont pas dans git
+#	lever des warnings si dest est plus récent
+#	ajouter un log des operations
+#
+# file format for attributes :
+# XXX._attr
+# 	PERM
+# 	XATTR.user.xxxx
+#	CREATE_COMMAND
+#	UPDATE_COMMAND
+#	ONCE # never update
+#	RECURSE
+

@@ -1,0 +1,41 @@
+# C-A redefinition
+  escape ^Aa
+
+
+# Define the time that all windows monitored for silence should
+# wait before displaying a message. Default 30 seconds.
+  silencewait 15   
+
+# Ensures that the default shell is the same as the value of the $SHELL env variable
+  shell -$SHELL
+
+# Pretty status bar at the bottom.
+# caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= @%H - %LD %d %LM - %c"
+#hardstatus alwayslastline 
+#hardstatus string "%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m/%d %{W}%c %{g}]"
+
+# Don't you want to start programs which need a DISPLAY ?
+#setenv DISPLAY ':0'
+
+# Default Buffers
+#screen -t Shell1 0 
+screen 0 
+#select 0
+
+vbell off                         # no bell
+autodetach on                     # detach on hangup
+startup_message off               # don't display the copyright page
+defutf8 on                        # utf-8 encoding
+defscrollback 30000               # change default scrollback value for new windows
+nonblock on                       # don't block everything, waiting for an unresponsive window
+bufferfile $HOME/.screenex        # the file to use for "readbuf" ('<') and  "writebuf" ('>'):
+#shell -$SHELL                     # make the shell in every window a login shell
+deflogin on                       # log new screen windows in utmp
+term screen-256color              # set $TERM
+termcapinfo rxvt* ti@:te@:XT      # improve mouse scrolling,
+altscreen on                      # and text will go into terminal scrollback buffer
+##screen -t "User" 0 zsh           # default windows
+##screen -t "Emacs" 1 emacs -nw
+sorendition Wk                    # status: normal text on black bg
+#                                  # [ hostname ][(0*$ zsh) (1-$ emacs)][ hostname ]
+hardstatus alwayslastline "%{G}[ %{Y}%H %{G}][%{w}%?%-Lw%?%{G}(%{W}%n*%f %t%?(%u)%?%{G})%{w}%?%+Lw%?%?%= %{G}][%{Y} %H %{G}]"
