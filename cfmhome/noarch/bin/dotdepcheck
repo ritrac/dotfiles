@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+set -e 
+
+type fzf
+type nvim
+type i3
+type emacs
+type tmux
+type ghostty
+type gopls
+type git
+
