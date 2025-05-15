@@ -16,10 +16,11 @@ export GIT_PS1_SHOWUNTRACKEDFILES="true"
 export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWCOLORHINTS="true"
 
-BACKRED='\e[01;41m'
-GREEN="\e[01;32m"
-BLUE="\e[01;34m"
-NORMAL="\e[00m"
+BACKRED="\[\e[01;41m\]"
+GREEN="\[\e[01;32m\]"
+BLUE="\[\e[01;34m\]"
+NORMAL="\[\e[00m\]"
+
 __prompt_command_git() {
     local P="\u@\h"
     if [ "$MYPROMPT_MODE" = 'git' ]; then
@@ -41,9 +42,11 @@ __prompt_command_git() {
 
 __prompt_command_std() {
     if [ $1 -eq 0 ]; then
-	export PS1="$GREEN\u@\h$BLUE \w \$$NORMAL "
+	export PS1="$GREEN\u@\h$BLUE \w \$ $NORMAL"
+	export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] "
+	export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$$NORMAL "
     else
-	export PS1="$BACKRED\u@\h$BLUE \w \$$NORMAL "
+	export PS1="$BACKRED\u@\h$BLUE \w \$ $NORMAL"
     fi
 }
 
