@@ -27,7 +27,6 @@ __prompt_command_git() {
 	#P="\[\033[01;34m\]$(basename $PWD)"
 	P="$GREEN$(basename $PWD)"
     else
-	#P="\u@\h\[\033[01;34m\] \w"
 	P="\u@\h$BLUE \w"
     fi
 
@@ -35,18 +34,15 @@ __prompt_command_git() {
     if [ $1 -eq 0 ]; then
 	export PS1="$GREEN$P ${BLUE}git:($(__git_ps1 "%s")${BLUE}) \$$NORMAL "
     else
-	#export PS1="\[\033[41m\]$P git:($(__git_ps1 " %s ")) \$\[\033[00m\] "
 	export PS1="$BACKRED$P ${BLUE}git:($(__git_ps1 "%s${BACKRED}${BLUE}")) \$$NORMAL "
     fi
 }
 
 __prompt_command_std() {
     if [ $1 -eq 0 ]; then
-	export PS1="$GREEN\u@\h$BLUE \w \$ $NORMAL"
-	export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] "
-	export PS1="\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$$NORMAL "
+	export PS1="$GREEN\u@\h$BLUE \w \$$NORMAL "
     else
-	export PS1="$BACKRED\u@\h$BLUE \w \$ $NORMAL"
+	export PS1="$BACKRED\u@\h$BLUE \w \$$NORMAL "
     fi
 }
 
