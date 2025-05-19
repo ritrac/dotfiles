@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+set -e
+
+base="$(basename "$0")"
+
+if [ -x  "$HOME/usr/src/jupyter/bin/$base" ]; then
+    . "$HOME/usr/src/jupyter/bin/activate"
+    $base $*
+else
+    echo "[ERROR] $base is not installed" >&2
+    echo "[ERROR] looking for $HOME/usr/src/jupyter/bin/$base" >&2
+    exit 1
+fi
+
+
