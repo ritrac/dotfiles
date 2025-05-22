@@ -11,4 +11,4 @@ type tmux
 type ghostty
 type gopls
 type git
-
+type rg # ripgrep

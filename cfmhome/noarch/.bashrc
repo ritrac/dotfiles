@@ -27,9 +27,3 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-export LANG=en_US.utf8
-
-
-
-
-
