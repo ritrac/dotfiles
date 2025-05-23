@@ -37,3 +37,7 @@ autocmd('LspAttach', {
     end
 })
 
+require("ritrac.autocmd")
+
+
+
