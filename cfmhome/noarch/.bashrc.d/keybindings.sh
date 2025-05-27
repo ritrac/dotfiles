@@ -1,5 +1,10 @@
 __append_project() {
-    READLINE_LINE="${READLINE_LINE}$(find $HOME/nfsHome/projets/ $HOME/projets/ -mindepth 1 -maxdepth 1 | fzf --scheme=path) "
+    file="$(find $HOME/nfsHome/projets/ $HOME/projets/ -mindepth 1 -maxdepth 1 | fzf --scheme=path)"
+    if [ -d "${file}" ]; then
+	READLINE_LINE="${READLINE_LINE}${file}/"
+    else
+	READLINE_LINE="${READLINE_LINE}${file} "
+    fi
     READLINE_POINT=$(echo "$READLINE_LINE" | wc -c)
 }
 bind -x '"\C-f": "__append_project"'
