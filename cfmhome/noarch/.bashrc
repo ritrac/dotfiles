@@ -1,10 +1,6 @@
 # Test for an interactive shell.  There is no need to set anything
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
-fi
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -12,10 +8,16 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+if ! [[ "$PATH" =~ "$HOME/bin:$HOME/.local/bin:" ]]; then
 	PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 fi
+
 export PATH
+
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
+fi
 
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
