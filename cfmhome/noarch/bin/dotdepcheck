@@ -9,6 +9,10 @@ type i3
 type emacs
 type tmux
 type ghostty
-type gopls
 type git
+type xauth
 type rg # ripgrep
+type dunst
+type luarocks
+type gopls
+type htop
