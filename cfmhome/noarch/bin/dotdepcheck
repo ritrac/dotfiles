@@ -10,6 +10,7 @@ type emacs
 type tmux
 type ghostty
 type git
+type xclip
 type xauth
 type rg # ripgrep
 type dunst
