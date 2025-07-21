@@ -74,6 +74,8 @@ vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set("n", "<F2>", ":split<CR>", {})
 vim.keymap.set("n", "<F3>", ":vsplit<CR>", {})
+vim.keymap.set("n", "<F4>", ":vsplit | vsplit <CR>", {})
+vim.keymap.set("n", "<F5>", ":wincmd = <CR>", {}) -- alias for "Ctrl-w = "
 vim.keymap.set("c", "à", "w", {})
 
 
