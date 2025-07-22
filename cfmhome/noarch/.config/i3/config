@@ -90,6 +90,9 @@ bindsym $mod+period split v
 # enter fullscreen mode for the focused container
 bindsym $mod+e fullscreen toggle
 
+# enter global fullscreen mode
+bindsym $mod+E fullscreen toggle global
+
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+u layout stacking
 bindsym $mod+eacute layout tabbed
