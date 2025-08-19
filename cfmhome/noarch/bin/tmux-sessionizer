@@ -6,13 +6,13 @@ PRJ_PATH="$HOME/projets:$HOME/nfsHome/projets"
 function list_prj() (
 	# space friendly function
 	# returns a list with the following format :
-	# 	/full/project/path/name;name
-	# 	/full/project/path/name;name[-id]
+	# 	timestamp:/full/project/path/name;name
+	# 	timestamp:/full/project/path/name;name[-id]
 	function subFind() {
 		OIFS=$IFS
 		IFS=':' # loop over ':' instead of spaces
 		for mdir in $(echo "$PRJ_PATH"); do
-			find "$mdir" -mindepth 1 -maxdepth 1 -type d
+			find "$mdir" -mindepth 1 -maxdepth 1 -type d -printf '%Ts:%p\n'
 		done
 		IFS=$OIFS
 	}
@@ -25,7 +25,7 @@ function list_prj() (
 		n=split($0, f, /\//);
 		name=f[n];
 		fname=$0;
-		# multidimentional array are not posix :/
+		# multidimentional array are not posix, so make a list :/
 	        b[ name ] = b[ name ] fname ";"
 	}
 	END {
@@ -40,6 +40,7 @@ function list_prj() (
 			}
 		}
 	}' |
+	sort -nr | cut -d':' -f2- | # remove the timestamp from subFind()
 	sed  "s|$PWD/||g" # just get the relative name
 )
 
