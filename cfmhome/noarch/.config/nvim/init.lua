@@ -1,3 +1,4 @@
+require("ritrac")
 
 vim.cmd.colorscheme 'elflord'
 
@@ -94,7 +95,8 @@ vim.opt.smartcase = true
 
 
 -- Decrease update time
-vim.opt.updatetime = 250
+-- vim.opt.updatetime = 250
+vim.opt.updatetime = 500
 
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 300
@@ -155,5 +157,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-
-require("ritrac")
+vim.cmd.colorscheme "github_dark_default"
