@@ -3,8 +3,6 @@
 # This template file has been automatically created at the following
 # path since Ghostty couldn't find any existing config files on your system:
 #
-#   /home/clement/.config/ghostty/config
-#
 # The template does not set any default options, since Ghostty ships
 # with sensible defaults for all options. Users should only need to set
 # options that they want to change from the default.
@@ -45,6 +43,9 @@
 
 #window-decoration = none
 window-decoration = server
+# low profile tabs
+gtk-custom-css = style.css
+
 background-opacity = 0.95
 
 #theme = Dark+
