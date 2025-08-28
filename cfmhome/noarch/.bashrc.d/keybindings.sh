@@ -1,3 +1,5 @@
+PRJ_PATH="$HOME/projets:$HOME/nfsHome/projets"
+
 __append_project() {
     file="$(find $HOME/nfsHome/projets/ $HOME/projets/ -mindepth 1 -maxdepth 1 | fzf --scheme=path)"
     if [ -d "${file}" ]; then
@@ -7,7 +9,75 @@ __append_project() {
     fi
     READLINE_POINT=$(echo "$READLINE_LINE" | wc -c)
 }
-bind -x '"\C-f": "__append_project"'
+
+
+function list_prj() (
+	# space friendly function
+	# returns a list with the following format :
+	# 	timestamp:/full/project/path/name;name
+	# 	timestamp:/full/project/path/name;name[-id]
+	function subFind() {
+		OIFS=$IFS
+		IFS=':' # loop over ':' instead of spaces
+		for mdir in $(echo "$PRJ_PATH"); do
+			find "$mdir" -mindepth 1 -maxdepth 1 -type d -printf '%Ts:%p\n'
+		done
+		IFS=$OIFS
+	}
+
+	subFind |
+	awk --posix '
+	# project name conflict disambiguation
+	# add a suffix number if name conflict
+	{
+		n=split($0, f, /\//);
+		name=f[n];
+		fname=$0;
+		# multidimentional array are not posix, so make a list :/
+	        b[ name ] = b[ name ] fname ";"
+	}
+	END {
+		for(name in b){
+			l=split( b[name], s, /;/);
+			for(i=1; i<l; i++){
+				if(1==l) {
+					print s[i] ";" name
+				} else {
+					print s[i] ";" name "-" i
+				}
+			}
+		}
+	}' |
+	sort -nr | cut -d':' -f2- | # remove the timestamp from subFind()
+	sed  "s|$PWD/||g" # just get the relative name
+)
+
+function prj_menu() {
+    list_prj | cut -d\; -f1 | fzf \
+        --scheme=path --margin=5%  \
+        --preview='fzf-preview.sh {}' \
+        --preview-label='[ Preview ]' \
+        --preview-label-pos='3:bottom' \
+        --input-border \
+        --input-label='[ BASHCOMP ]' \
+        --input-label-pos='3:bottom'
+
+}
+
+__append_project2() {
+    file="$(prj_menu)"
+
+    if [ -d "${file}" ]; then
+        file="${file}/"
+    fi
+    l="${#file}"
+    header="${READLINE_LINE:0:$READLINE_POINT}"
+    footer="${READLINE_LINE:$READLINE_POINT}"
+    READLINE_LINE="${header}${file}${footer}"
+    READLINE_POINT="$(( $READLINE_POINT + $l ))"
+}
+
+bind -x '"\C-f": "__append_project2"'
 bind -x '"\C-bf": "tmux-sessionizer"'
 
 # Shift TAB
