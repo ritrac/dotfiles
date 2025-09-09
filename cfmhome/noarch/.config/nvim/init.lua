@@ -1,14 +1,16 @@
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.wrap = false
 require("ritrac")
 
 vim.cmd.colorscheme 'elflord'
 
 vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.smartindent = true
-vim.opt.wrap = false
+-- vim.opt.expandtab = true
 
 -- Make line numbers default
 vim.opt.number = true
@@ -17,6 +19,7 @@ vim.opt.number = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
+vim.opt.shiftwidth = 4
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 -- vim.opt.mouse = 'a'
@@ -70,6 +73,7 @@ vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set('n', '<M-n>', ':wincmd L <CR>', { desc = 'Move focus to the right window', noremap=true })
 -- vim.keymap.set('n', '<M-s>', ':wincmd J <CR>', { desc = 'Move focus to the lower window', noremap=true })
 -- vim.keymap.set('n', '<M-r>', ':wincmd K <CR>', { desc = 'Move focus to the upper window', noremap=true })
+
 
 
 -- TODO shortcut for:
