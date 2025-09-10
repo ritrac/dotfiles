@@ -75,6 +75,8 @@ vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set('n', '<M-r>', ':wincmd K <CR>', { desc = 'Move focus to the upper window', noremap=true })
 
 
+vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
+vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
 
 -- TODO shortcut for:
 -- 			- n (search next)
