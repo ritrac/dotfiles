@@ -32,7 +32,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
+    vim.opt.clipboard = 'unnamedplus'
 end)
 
 
@@ -93,8 +93,8 @@ vim.keymap.set("c", "à", "w", {})
 
 
 -- native shortcuts:
-    -- * next word 
-    -- # prev word 
+-- * next word 
+-- # prev word 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -162,11 +162,11 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 vim.cmd.colorscheme "github_dark_default"
