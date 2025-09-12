@@ -9,9 +9,6 @@ require("ritrac")
 
 vim.cmd.colorscheme 'elflord'
 
-vim.opt.shiftwidth = 4
--- vim.opt.expandtab = true
-
 -- Make line numbers default
 vim.opt.number = true
 
@@ -23,7 +20,6 @@ vim.opt.shiftwidth = 4
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 -- vim.opt.mouse = 'a'
-
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -77,6 +73,8 @@ vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
 vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
+-- By default: <C-w> T -> move window to a new tab
+
 
 -- TODO shortcut for:
 -- 			- n (search next)
