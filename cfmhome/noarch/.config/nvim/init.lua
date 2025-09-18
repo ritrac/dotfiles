@@ -34,26 +34,22 @@ end)
 
 -- modes:
 -- 	- ' ' : normal + visual + select + operator
--- 	- l: lmap -> insert + command line + lang arg 
+-- 	- l: lmap -> insert + command line + lang arg
 -- 	- c: command
 -- 	- n: normal
--- 	- v: visual and select 
+-- 	- v: visual and select
 -- 	- x: visual
 -- 	- i: insert
 -- 	- s: Sel ?
--- 	- o: Operator pending 
+-- 	- o: Operator pending
 -- 	- t: Term ?
 -- 	- l: Lang ?
 
---vim.keymap.set("n", "<A-n>", "n", {noremap=true})
---vim.keymap.set("n", "<A-S-n>", "N", {})
---vim.keymap.set("n", "R", "r", {})
-
 ------------------------------------
-vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-t>", "<left>", {noremap=true, desc="Left"})
-vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-s>", "<down>", {noremap=true, desc="Down"})
-vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-r>", "<up>", {noremap=true, desc="Up"})
-vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-n>", "<right>", {noremap=true, desc="Right"})
+-- vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-t>", "<left>", {noremap=true, desc="Left"})
+-- vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-s>", "<down>", {noremap=true, desc="Down"})
+-- vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-r>", "<up>", {noremap=true, desc="Up"})
+-- vim.keymap.set({"n", "v", "x", "s", "o"}, "<C-n>", "<right>", {noremap=true, desc="Right"})
 
 ------------------------------------
 -- Keybinds to make split navigation easier.
@@ -65,14 +61,11 @@ vim.keymap.set('n', '<M-n>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<M-s>', '<C-w><C-j>', { desc = 'Move focus to the lower window', noremap=true })
 vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window', noremap=true })
 
--- vim.keymap.set('n', '<M-t>', ':wincmd H <CR>', { desc = 'Move focus to the left window', noremap=true})
--- vim.keymap.set('n', '<M-n>', ':wincmd L <CR>', { desc = 'Move focus to the right window', noremap=true })
--- vim.keymap.set('n', '<M-s>', ':wincmd J <CR>', { desc = 'Move focus to the lower window', noremap=true })
--- vim.keymap.set('n', '<M-r>', ':wincmd K <CR>', { desc = 'Move focus to the upper window', noremap=true })
 
-
-vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
-vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
+vim.keymap.set('n', '<S-TAB>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
+vim.keymap.set('n', '<TAB>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
+--vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
+--vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
 -- By default: <C-w> T -> move window to a new tab
 
 
@@ -91,8 +84,8 @@ vim.keymap.set("c", "à", "w", {})
 
 
 -- native shortcuts:
--- * next word 
--- # prev word 
+-- * next word
+-- # prev word
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
