@@ -20,11 +20,11 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.rename() end,
             { buffer = e.buf, desc = 'Rename'})
         vim.keymap.set("n", "<leader>lk", function() vim.diagnostic.open_float() end,
-            { buffer = e.buf, desc = 'Open Float'})
+            { buffer = e.buf, desc = 'Open Float Diag'})
         vim.keymap.set("n", "<leader>ln", function() vim.diagnostic.goto_next() end,
-            { buffer = e.buf, desc = 'Goto next'})
+            { buffer = e.buf, desc = 'Goto Diag Next'})
         vim.keymap.set("n", "<leader>lp", function() vim.diagnostic.goto_prev() end,
-            { buffer = e.buf, desc = 'Goto prev'})
+            { buffer = e.buf, desc = 'Goto Diag Prev'})
 
         vim.keymap.set("n", "<leader>lws", function() vim.lsp.buf.workspace_symbol() end,
             { buffer = e.buf, desc = 'Workspace symbol'})
