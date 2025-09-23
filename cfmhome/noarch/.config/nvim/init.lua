@@ -62,8 +62,8 @@ vim.keymap.set('n', '<M-s>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window', noremap=true })
 
 
-vim.keymap.set('n', '<S-TAB>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
-vim.keymap.set('n', '<TAB>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
+vim.keymap.set('n', '<S-TAB>', ':tabprevious<CR>', { desc = 'Move to the previous window', noremap=true})
+vim.keymap.set('n', '<TAB>', ':tabnext<CR>', { desc = 'Move to the next tab', noremap=true })
 --vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
 --vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
 -- By default: <C-w> T -> move window to a new tab
@@ -80,7 +80,7 @@ vim.keymap.set("n", "<F2>", ":split<CR>", {})
 vim.keymap.set("n", "<F3>", ":vsplit<CR>", {})
 vim.keymap.set("n", "<F4>", ":vsplit | vsplit <CR>", {})
 vim.keymap.set("n", "<F5>", ":wincmd = <CR>", {}) -- alias for "Ctrl-w = "
-vim.keymap.set("c", "à", "w", {})
+vim.keymap.set("c", "à", "w", {}) -- ça marche mais interet d'une nouvelle touche w ?
 
 
 -- native shortcuts:
@@ -102,7 +102,7 @@ vim.opt.smartcase = true
 vim.opt.updatetime = 500
 
 -- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+-- vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
