@@ -57,7 +57,7 @@ background-opacity = 0.95
 #theme = 3024 Night
 
 # vert sur noir :
-theme = RetroLegends
+theme = Retro Legends
 #theme = Adventure # PB: fonte en blanc, pas cool la nuit
 # ghostty +show-config --default --docs | grep -i windo | grep -v '#'
 
