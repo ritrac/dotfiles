@@ -1,6 +1,7 @@
 return {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    -- tag = "0.1.8",
+    -- branch = '0.1.x',
     dependencies = {
         "nvim-lua/plenary.nvim",
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
@@ -35,16 +36,16 @@ return {
         --     builtin.grep_string({ search = vim.fn.input("Grep > ") })
         -- end)
 
-        vim.keymap.set('n', '<leader>ft', function()
+        vim.keymap.set('n', '<leader>pt', function()
             --return builtin.git_files {cwd = vim.fn.expand("%:h")}
             return builtin.git_files {}
         end, { desc = 'Telescope find Git files'})
 
-        vim.keymap.set("n", "<leader>fd", builtin.find_files, {desc='Telescope find files'})
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep,  {desc='Telescope live grep' })
+        vim.keymap.set("n", "<leader>pf", builtin.find_files, {desc='Telescope find files'})
+        vim.keymap.set('n', '<leader>pg', builtin.live_grep,  {desc='Telescope live grep' })
         --vim.keymap.set("n", "<leader>fg", require "custom.telescope.multi-ripgrep")
-        vim.keymap.set('n', '<leader>fb', builtin.buffers,    {desc='Telescope buffers' })
-        vim.keymap.set('n', '<leader>fh', builtin.help_tags,  {desc='Telescope help tags' })
+        vim.keymap.set('n', '<leader>pp', builtin.buffers,    {desc='Telescope buffers' })
+        vim.keymap.set('n', '<leader>ph', builtin.help_tags,  {desc='Telescope help tags' })
         vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find,{desc='Buffer fuzzyfind' })
 
         vim.keymap.set("n", "<space>gw", builtin.grep_string, {desc='Telescope Grep String'})
@@ -60,13 +61,16 @@ return {
         vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, { desc = 'List workspace symbols' })
         vim.keymap.set('n', '<leader>ts', builtin.lsp_document_symbols, { desc = 'List document symbols' })
         vim.keymap.set('n', '<leader>tS', builtin.treesitter, { desc = 'List workspace symbols' })
+        vim.keymap.set('n', '<leader>tu', builtin.lsp_incoming_calls, { desc = 'List incoming calls' })
+        vim.keymap.set('n', '<leader>tU', builtin.lsp_outgoing_calls, { desc = 'List outgoing calls' })
+        vim.keymap.set('n', '<leader>te', builtin.diagnostics, { desc = 'List diagnostics' })
         vim.keymap.set('n', '<leader>tf', function()
-            require('telescope.builtin').lsp_dynamic_workspace_symbols({
+            require('telescope.builtin').lsp_workspace_symbols({
                 symbols='function' ,
                 file_ignore_patterns= {'/usr/include'}
             })
         end
-            , { desc = 'List document functions' })
+            , { desc = 'List workspace functions' })
 
     end
 }
