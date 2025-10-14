@@ -9,7 +9,7 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
-        "L3MON4D3/LuaSnip",
+        -- "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
     },
@@ -37,6 +37,8 @@ return {
                 "rust_analyzer",
                 "clangd",
                 "zls",
+                "gopls",
+                "tailwindcss",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -82,6 +84,13 @@ return {
                 ["clang"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.clang.setup({})
+                end,
+                ["tailwindcss"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tailwindcss.setup({
+                        capabilities = capabilities,
+                        filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
+                    })
                 end,
             },
         })
