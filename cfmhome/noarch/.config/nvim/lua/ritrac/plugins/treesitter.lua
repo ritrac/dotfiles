@@ -11,9 +11,9 @@ return {
                 "c", "cpp", "css", "go", "asm", "bash", "cuda", "diff",
                 "gitcommit", "gitignore", "gowork", "json", "cmake",
                 "make", "perl", "pod", "python", "php", "rst", "rust",
-                "ssh_config", "tmux", "xml", "yaml", "zig",
+                "ssh_config", "tmux", "xml", "yaml", "zig", "go", "css",
                 "lua", "vim", "vimdoc", "query", "elixir",
-                "heex", "javascript", "html" },
+                "heex", "javascript", "html", "markdown", "markdown_inline" },
             sync_install = false,
             auto_install = true,
             highlight = { enable = true
