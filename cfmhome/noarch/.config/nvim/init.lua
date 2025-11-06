@@ -4,7 +4,7 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 require("ritrac")
 
 vim.cmd.colorscheme 'elflord'
@@ -87,7 +87,7 @@ vim.keymap.set("c", "à", "w", {}) -- ça marche mais interet d'une nouvelle tou
 -- * next word
 -- # prev word
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '_'
 
 -- Enable break indent
 vim.opt.breakindent = true
