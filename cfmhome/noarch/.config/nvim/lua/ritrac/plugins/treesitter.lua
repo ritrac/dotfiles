@@ -12,7 +12,7 @@ return {
                 "gitcommit", "gitignore", "gowork", "json", "cmake",
                 "make", "perl", "pod", "python", "php", "rst", "rust",
                 "ssh_config", "tmux", "xml", "yaml", "zig", "go", "css",
-                "lua", "vim", "vimdoc", "query", "elixir",
+                "lua", "vim", "vimdoc", "query", "elixir", "latex",
                 "heex", "javascript", "html", "markdown", "markdown_inline" },
             sync_install = false,
             auto_install = true,
