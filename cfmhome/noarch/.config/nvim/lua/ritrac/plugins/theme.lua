@@ -1,29 +1,29 @@
 return {
 	-- theme
 	{
-		"rose-pine/neovim",
+		-- "rose-pine/neovim",
 	},
 	{
-		"folke/tokyonight.nvim",
+		-- "folke/tokyonight.nvim",
 	},
 	{
-		"scottmckendry/cyberdream.nvim",
+		-- "scottmckendry/cyberdream.nvim",
 	},
 	{
-		"navarasu/onedark.nvim",
+		-- "navarasu/onedark.nvim",
 	},
 	{
-		"catppuccin/nvim",
+		-- "catppuccin/nvim",
 	},
 	{
 		"projekt0n/github-nvim-theme",
 	},
 	{
-		"EdenEast/nightfox.nvim",
-		name = "nightfox",
-		config = function()
-			require("nightfox").setup({
-			})
-		end,
+		-- "EdenEast/nightfox.nvim",
+		-- name = "nightfox",
+		-- config = function()
+		-- 	require("nightfox").setup({
+		-- 	})
+		-- end,
 	},
 }
