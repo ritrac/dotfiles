@@ -8,6 +8,10 @@ return {
     opts = {},
     config = function()
         require('render-markdown').setup {
+            heading = {
+                enabled = true,
+                border = true,
+            },
             link = {
                 -- Turn on / off inline link icon rendering.
                 enabled = true,
