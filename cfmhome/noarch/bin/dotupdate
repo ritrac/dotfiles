@@ -2,6 +2,7 @@
 set -e
 DEBUG=""
 
+
 scriptName="$(readlink -f "$(type -p "$0")")"
 LIBEXEC="$(dirname "$scriptName")/libexec/$(basename "$scriptName")"
 # test -d "$LIBEXEC" || echo "[$0] ERROR: missing $LIBEXEC directory" >&2
@@ -91,7 +92,7 @@ if [ -z "${DOT_REFDIR}" ]; then
     DOT_REFDIR="$PWD"
     read -p "Select your Reference directory [${DOT_REFDIR}]: " dir
     if [ -n "$dir" ]; then
-	DOT_REFDIR="$dir"
+        DOT_REFDIR="$dir"
     fi
 fi
 
@@ -104,13 +105,13 @@ cd "${DOT_REFDIR}"
 
 if [ ! -d 'noarch' -o ! -f 'config' ]; then
     if [ "$(find | wc -l)" -gt 1 ]; then
-	echo "[ERROR] '${DOT_REFDIR}' is not an initialyzed repository and is not empty" >&2
-	exit 2
+        echo "[ERROR] '${DOT_REFDIR}' is not an initialyzed repository and is not empty" >&2
+        exit 2
     fi
 
     read -p "Initialize directory in \"$PWD\" ? (y/N)" doInstall
     if [ ! -n "$doInstall" -o "$doInstall" != "y" ]; then
-	exit 3
+        exit 3
     fi
 
     # Initialization
@@ -124,10 +125,10 @@ fi
 
 if [ -z "${DOT_BASEDIR}" ]; then
     if [ -f config ]; then
-	. config
+        . config
     fi
     if [ "${DOT_BASEDIR}" == '~' ]; then
-	DOT_BASEDIR="$HOME"
+        DOT_BASEDIR="$HOME"
     fi
 
 fi
@@ -135,36 +136,53 @@ fi
 function applyConf
 {
     cd noarch
+    FLIST="$(git ls-files)"
+    MLIST="$(git ls-files -m)"
+
     while read -u 3 -d $'\0' file
     do
-	dst="${DOT_BASEDIR}/$file"
+        dst="${DOT_BASEDIR}/$file"
 
-	if [ -d "$file" ]; then
-	    if [ ! -e "$dst" ]; then
-		$DEBUG mkdir -v "$dst"
-	    fi
-	elif [ -f "$file" ]; then
-	    if [ -e "$dst" ]; then
-		fileDate="$(git log -1 --pretty="format:%ct" "$file" 2>/dev/null)"
-		if [ -z "$fileDate" ]; then
-		    fileDate="$(stat -c'%Y' "$file")"
-		fi
-		dstDate="$(stat -c'%Y' "$dst")"
-		if [ "$dstDate" -ne "$fileDate" ]; then
-		    if [ "$dstDate" -gt "$fileDate" ]; then
-			echo "Warning: \"$dst\" newer than \"$file\""
-		    elif ! diff "$dst" "$file" > /dev/null; then
-			git diff --no-index "$dst" "$file" || true
-			echo "Warning: \"$dst\" needs to be updated"
-			$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
-		    fi
-		fi
-	    else
-		$DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
-	    fi
-	fi
+        if [ -d "$file" ]; then
+            if [ ! -e "$dst" ]; then
+                $DEBUG mkdir -v "$dst"
+            fi
+        elif [ -f "$file" ]; then
+            if [ -e "$dst" ]; then
+                if echo "$FLIST" | grep -qw "$file" >/dev/null 2>&1; then
+                    # fileDate="$(git log -1 --pretty="format:%ct" "$file" 2>/dev/null)"
+                    if echo "$MLIST" | grep -qw "$file"; then
+                        echo "Warning: \"$file\" changes not commited"
+                    fi
+                else
+                    echo "Warning: \"$file\" not in git"
+                fi
 
-	# check permision in $file._perm
+                fileDate="$(stat -c'%Y' "$file")"
+                dstDate="$(stat -c'%Y' "$dst")"
+
+                if [ "$dstDate" -ne "$fileDate" ]; then
+                    if ! diff "$dst" "$file" > /dev/null; then
+                        if [ "$dstDate" -gt "$fileDate" ]; then
+                            # echo "Warning: \"$dst\" newer than \"$file\""
+                            echo "Warning: \"$dst\" locally modified"
+                        else
+                            git diff --no-index "$dst" "$file" || true
+                            echo "Warning: \"$dst\" needs to be updated"
+                            $DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
+                        fi
+                    else
+                        # same files, fix the date
+                        fDate="$(stat -c'%y' "$file")"
+                        $DEBUG touch -m -d "$fDate" "$dst"
+                    fi
+                fi
+            else
+                $DEBUG cp -v --preserve=timestamps -i "$file" "$dst"
+            fi
+        fi
+
+        # check permision in $file._perm
 
     done 3< <( find -not -name '*~' -not -name '.swp' -not -name '.' -printf '%P\0' )
 }
