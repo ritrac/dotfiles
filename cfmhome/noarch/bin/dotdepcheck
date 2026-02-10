@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-set -e 
+set -e
 
 type fzf
 type nvim
@@ -17,3 +17,7 @@ type dunst
 type luarocks
 type gopls
 type htop
+type cloc
+type cargo # if we need to install tree-sitter manually
+type tree-sitter # used for nvim-treesitter-latex
+
