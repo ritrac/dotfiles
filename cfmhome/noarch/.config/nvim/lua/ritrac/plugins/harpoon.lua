@@ -1,6 +1,6 @@
--- lazy.lua plugin
 return {
-	'theprimeagen/harpoon',
-	enabled = true,
-
+    'ThePrimeagen/harpoon',
+    branch = "harpoon2",
+    enabled = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
 }
