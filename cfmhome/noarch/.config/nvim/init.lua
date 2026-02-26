@@ -5,9 +5,15 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = true
+
+vim.o.winborder = "rounded"
+
 require("ritrac")
 
-vim.cmd.colorscheme 'elflord'
+vim.lsp.log.set_level("ERROR")
+
+-- vim.cmd.colorscheme 'elflord'
+vim.cmd.colorscheme "github_dark_default"
 
 -- Make line numbers default
 vim.opt.number = true
@@ -27,10 +33,15 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.opt.smoothscroll = false
+
 vim.schedule(function()
     vim.opt.clipboard = 'unnamedplus'
 end)
 
+vim.opt.signcolumn = "yes:1"
+
+vim.o.cmdheight = 0
 
 -- modes:
 -- 	- ' ' : normal + visual + select + operator
@@ -62,12 +73,39 @@ vim.keymap.set('n', '<M-s>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window', noremap=true })
 
 
+vim.keymap.set('n', '<C-">', '1gt<CR>', { desc = 'Move to TAB-1', noremap=true})
+vim.keymap.set('n', '<C-«>', '2gt<CR>', { desc = 'Move to TAB-2', noremap=true})
+vim.keymap.set('n', '<C-»>', '3gt<CR>', { desc = 'Move to TAB-3 ', noremap=true})
+vim.keymap.set('n', '<C-(>', '4gt<CR>', { desc = 'Move to TAB-4', noremap=true})
+vim.keymap.set('n', '<C-)>', '5gt<CR>', { desc = 'Move to TAB-5', noremap=true})
+vim.keymap.set('n', '<C-@>', '6gt<CR>', { desc = 'Move to TAB-6', noremap=true})
+vim.keymap.set('n', '<C-+>', '7gt<CR>', { desc = 'Move to TAB-7', noremap=true})
+vim.keymap.set('n', '<C-->', '8gt<CR>', { desc = 'Move to TAB-8', noremap=true})
+vim.keymap.set('n', '<C-/>', '9gt<CR>', { desc = 'Move to TAB-9', noremap=true})
+vim.keymap.set('n', '<C-*>', '0gt<CR>', { desc = 'Move to TAB-0', noremap=true})
+
 vim.keymap.set('n', '<S-TAB>', ':tabprevious<CR>', { desc = 'Move to the previous window', noremap=true})
 vim.keymap.set('n', '<TAB>', ':tabnext<CR>', { desc = 'Move to the next tab', noremap=true })
+
 --vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
 --vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
 -- By default: <C-w> T -> move window to a new tab
 
+
+-- Harpoon
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>A", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = 'Harpoon Menu', noremap=true})
+vim.keymap.set('n', '<M-">', function() harpoon:list():select(1) end, { desc = 'Harpoon Select-1', noremap=true})
+vim.keymap.set('n', '<M-«>', function() harpoon:list():select(2) end, { desc = 'Harpoon Select-2', noremap=true})
+vim.keymap.set('n', '<M-»>', function() harpoon:list():select(3) end, { desc = 'Harpoon Select-3', noremap=true})
+vim.keymap.set('n', '<M-(>', function() harpoon:list():select(4) end, { desc = 'Harpoon Select-4', noremap=true})
+vim.keymap.set('n', '<M-)>', function() harpoon:list():select(5) end, { desc = 'Harpoon Select-5', noremap=true})
+vim.keymap.set('n', '<M-@>', function() harpoon:list():select(6) end, { desc = 'Harpoon Select-6', noremap=true})
+vim.keymap.set('n', '<M-+>', function() harpoon:list():select(7) end, { desc = 'Harpoon Select-7', noremap=true})
+vim.keymap.set('n', '<M-->', function() harpoon:list():select(8) end, { desc = 'Harpoon Select-8', noremap=true})
+vim.keymap.set('n', '<M-/>', function() harpoon:list():select(9) end, { desc = 'Harpoon Select-9', noremap=true})
+vim.keymap.set('n', '<M-*>', function() harpoon:list():select(0) end, { desc = 'Harpoon Select-0', noremap=true})
 
 -- TODO shortcut for:
 -- 			- n (search next)
@@ -160,7 +198,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-vim.cmd.colorscheme "github_dark_default"
+-- vim.cmd.colorscheme "github_dark_default"
 
 
 
