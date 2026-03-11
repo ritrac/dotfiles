@@ -15,5 +15,7 @@ return {
         trail.setup()
         local ai = require 'mini.ai' -- !!! not an LLM thing
         ai.setup()
+        local notify = require 'mini.notify'
+        notify.setup()
     end
 }
