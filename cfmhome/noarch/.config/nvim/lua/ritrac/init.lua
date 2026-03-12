@@ -1,8 +1,6 @@
 
 require("ritrac.remap")
 require("ritrac.lazy")
--- require("ritrac.lsp")
--- require("ritrac.treesitter")
 
 local autocmd = vim.api.nvim_create_autocmd
 
