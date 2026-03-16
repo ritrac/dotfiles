@@ -2,9 +2,19 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
         "stevearc/conform.nvim",
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "j-hui/fidget.nvim",
+        -- "mason.org/mason.nvim",
+        {
+            'mason-org/mason.nvim',
+            ---@module 'mason.settings'
+            ---@type MasonSettings
+            ---@diagnostic disable-next-line: missing-fields
+            opts = {},
+        },
+        -- Maps LSP server names between nvim-lspconfig and Mason package names.
+      'mason-org/mason-lspconfig.nvim',
+
+        -- "williamboman/mason-lspconfig.nvim",
+        "j-hui/fidget.nvim", -- useful status updates for LSP
     },
 
     config = function()
