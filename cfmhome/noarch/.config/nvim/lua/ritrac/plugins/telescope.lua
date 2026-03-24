@@ -9,10 +9,13 @@ return {
     },
 
     config = function()
-        require('telescope').setup{
+        require('telescope').setup {
             pickers = {
                 find_files = {
                     --theme = "ivy"
+                },
+                colorscheme = {
+                    enable_preview = true
                 }
             },
             extensions = {
@@ -24,26 +27,26 @@ return {
         local builtin = require('telescope.builtin')
 
         vim.keymap.set("n", "<space>ep", function()
-           builtin.find_files {
+            builtin.find_files {
                 cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
             }
-        end, {desc='Telescope data lazy'})
+        end, { desc = 'Telescope data lazy' })
 
         --require "config.telescope.multigrep".setup()
 
         vim.keymap.set('n', '<leader>pt', function()
             --return builtin.git_files {cwd = vim.fn.expand("%:h")}
             return builtin.git_files {}
-        end, { desc = 'Telescope find Git files'})
+        end, { desc = 'Telescope find Git files' })
 
-        vim.keymap.set("n", "<leader>pf", builtin.find_files, {desc='Telescope find files'})
-        vim.keymap.set('n', '<leader>pg', builtin.live_grep,  {desc='Telescope live grep' })
+        vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = 'Telescope find files' })
+        vim.keymap.set('n', '<leader>pg', builtin.live_grep, { desc = 'Telescope live grep' })
         --vim.keymap.set("n", "<leader>fg", require "custom.telescope.multi-ripgrep")
-        vim.keymap.set('n', '<leader>pp', builtin.buffers,    {desc='Telescope buffers' })
-        vim.keymap.set('n', '<leader>ph', builtin.help_tags,  {desc='Telescope help tags' })
-        vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find,{desc='Buffer fuzzyfind' })
+        vim.keymap.set('n', '<leader>pp', builtin.buffers, { desc = 'Telescope buffers' })
+        vim.keymap.set('n', '<leader>ph', builtin.help_tags, { desc = 'Telescope help tags' })
+        vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Buffer fuzzyfind' })
 
-        vim.keymap.set("n", "<space>gw", builtin.grep_string, {desc='Telescope Grep String'})
+        vim.keymap.set("n", "<space>gw", builtin.grep_string, { desc = 'Telescope Grep String' })
 
         vim.keymap.set("n", "<space>en", function()
             builtin.find_files { cwd = vim.fn.stdpath "config" }
@@ -59,14 +62,13 @@ return {
         vim.keymap.set('n', '<leader>tu', builtin.lsp_incoming_calls, { desc = 'List incoming calls' })
         vim.keymap.set('n', '<leader>tU', builtin.lsp_outgoing_calls, { desc = 'List outgoing calls' })
         vim.keymap.set('n', '<leader>te', builtin.diagnostics, { desc = 'List diagnostics' })
+        vim.keymap.set('n', '<leader>tc', builtin.colorscheme, { desc = 'Colorscheme Selection' })
         vim.keymap.set('n', '<leader>tf', function()
             require('telescope.builtin').lsp_workspace_symbols({
-                symbols='function' ,
-                file_ignore_patterns= {'/usr/include'}
+                symbols = 'function',
+                file_ignore_patterns = { '/usr/include' }
             })
         end
-            , { desc = 'List workspace functions' })
-
+        , { desc = 'List workspace functions' })
     end
 }
-
