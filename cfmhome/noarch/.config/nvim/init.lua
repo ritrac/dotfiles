@@ -1,4 +1,3 @@
-
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -12,36 +11,82 @@ require("ritrac")
 
 vim.lsp.log.set_level("ERROR")
 
+-- ------------------------------------------------------ --
+-- ---------------------- THEME ------------------------- --
+-- ------------------------------------------------------ --
+
 -- vim.cmd.colorscheme 'elflord'
-vim.cmd.colorscheme "github_dark_default"
+-- vim.cmd.colorscheme "github_dark_default"
+vim.cmd.colorscheme "acario_dark"
 
--- Make line numbers default
-vim.opt.number = true
+-- show vertical separation
+-- vim.api.nvim_set_hl(0, "WinSeparator", {
+--     fg = "purple",
+--     bg = "NONE",
+--     bold = true,
+-- })
+--
+-- vim.opt.fillchars = {
+--     vert = "┃",
+--     horiz = "━",
+-- }
+--
+-- vim.api.nvim_set_hl(0, "MiniStatuslineInactive", {
+--     fg = "purple",
+--     -- bg = "grey",
+-- })
+--
+vim.opt.signcolumn = "yes:1"  -- avoid signcolumn constantly resizing
+vim.o.cmdheight = 0           -- hide command line if not needed
+vim.opt.number = true         -- Make line numbers default
+vim.opt.relativenumber = true -- help for jumping
+vim.opt.cursorline = true     -- Show which line your cursor is on
+vim.opt.smoothscroll = false  -- can be slow (SSH ?)
 
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
-vim.opt.relativenumber = true
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  callback = function()
+    vim.wo.cursorline = true
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  callback = function()
+    vim.wo.cursorline = false
+  end,
+})
+
+
+vim.api.nvim_set_hl(0, "ActiveWindow", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "InactiveWindow", { bg = "NONE" })
+
+vim.api.nvim_set_hl(0, "ActiveSeparator", { fg = "#7aa2f7", bold = true })
+vim.api.nvim_set_hl(0, "InactiveSeparator", { fg = "#3b4261" })
+
+vim.api.nvim_create_autocmd({ "WinEnter" }, {
+  callback = function()
+    vim.wo.winhighlight = "Normal:ActiveWindow,WinSeparator:ActiveSeparator"
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "WinLeave" }, {
+  callback = function()
+    vim.wo.winhighlight = "Normal:InactiveWindow,WinSeparator:InactiveSeparator"
+  end,
+})
 
 vim.opt.shiftwidth = 4
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 -- vim.opt.mouse = 'a'
 
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
-vim.opt.smoothscroll = false
 
 vim.schedule(function()
     vim.opt.clipboard = 'unnamedplus'
 end)
 
-vim.opt.signcolumn = "yes:1"
-
-vim.o.cmdheight = 0
 
 -- modes:
 -- 	- ' ' : normal + visual + select + operator
@@ -67,25 +112,25 @@ vim.o.cmdheight = 0
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<M-t>', '<C-w><C-h>', { desc = 'Move focus to the left window', noremap=true})
-vim.keymap.set('n', '<M-n>', '<C-w><C-l>', { desc = 'Move focus to the right window', noremap=true })
-vim.keymap.set('n', '<M-s>', '<C-w><C-j>', { desc = 'Move focus to the lower window', noremap=true })
-vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window', noremap=true })
+vim.keymap.set('n', '<M-t>', '<C-w><C-h>', { desc = 'Move focus to the left window', noremap = true })
+vim.keymap.set('n', '<M-n>', '<C-w><C-l>', { desc = 'Move focus to the right window', noremap = true })
+vim.keymap.set('n', '<M-s>', '<C-w><C-j>', { desc = 'Move focus to the lower window', noremap = true })
+vim.keymap.set('n', '<M-r>', '<C-w><C-k>', { desc = 'Move focus to the upper window', noremap = true })
 
 
-vim.keymap.set('n', '<C-">', '1gt<CR>', { desc = 'Move to TAB-1', noremap=true})
-vim.keymap.set('n', '<C-«>', '2gt<CR>', { desc = 'Move to TAB-2', noremap=true})
-vim.keymap.set('n', '<C-»>', '3gt<CR>', { desc = 'Move to TAB-3 ', noremap=true})
-vim.keymap.set('n', '<C-(>', '4gt<CR>', { desc = 'Move to TAB-4', noremap=true})
-vim.keymap.set('n', '<C-)>', '5gt<CR>', { desc = 'Move to TAB-5', noremap=true})
-vim.keymap.set('n', '<C-@>', '6gt<CR>', { desc = 'Move to TAB-6', noremap=true})
-vim.keymap.set('n', '<C-+>', '7gt<CR>', { desc = 'Move to TAB-7', noremap=true})
-vim.keymap.set('n', '<C-->', '8gt<CR>', { desc = 'Move to TAB-8', noremap=true})
-vim.keymap.set('n', '<C-/>', '9gt<CR>', { desc = 'Move to TAB-9', noremap=true})
-vim.keymap.set('n', '<C-*>', '0gt<CR>', { desc = 'Move to TAB-0', noremap=true})
+vim.keymap.set('n', '<C-">', '1gt<CR>', { desc = 'Move to TAB-1', noremap = true })
+vim.keymap.set('n', '<C-«>', '2gt<CR>', { desc = 'Move to TAB-2', noremap = true })
+vim.keymap.set('n', '<C-»>', '3gt<CR>', { desc = 'Move to TAB-3 ', noremap = true })
+vim.keymap.set('n', '<C-(>', '4gt<CR>', { desc = 'Move to TAB-4', noremap = true })
+vim.keymap.set('n', '<C-)>', '5gt<CR>', { desc = 'Move to TAB-5', noremap = true })
+vim.keymap.set('n', '<C-@>', '6gt<CR>', { desc = 'Move to TAB-6', noremap = true })
+vim.keymap.set('n', '<C-+>', '7gt<CR>', { desc = 'Move to TAB-7', noremap = true })
+vim.keymap.set('n', '<C-->', '8gt<CR>', { desc = 'Move to TAB-8', noremap = true })
+vim.keymap.set('n', '<C-/>', '9gt<CR>', { desc = 'Move to TAB-9', noremap = true })
+vim.keymap.set('n', '<C-*>', '0gt<CR>', { desc = 'Move to TAB-0', noremap = true })
 
-vim.keymap.set('n', '<S-TAB>', ':tabprevious<CR>', { desc = 'Move to the previous window', noremap=true})
-vim.keymap.set('n', '<TAB>', ':tabnext<CR>', { desc = 'Move to the next tab', noremap=true })
+vim.keymap.set('n', '<S-TAB>', ':tabprevious<CR>', { desc = 'Move to the previous window', noremap = true })
+vim.keymap.set('n', '<TAB>', ':tabnext<CR>', { desc = 'Move to the next tab', noremap = true })
 
 --vim.keymap.set('n', '<C-t>', ':-tabnext <CR>', { desc = 'Move to the previous window', noremap=true})
 --vim.keymap.set('n', '<C-n>', ':+tabnext <CR>', { desc = 'Move to the next tab', noremap=true })
@@ -95,17 +140,18 @@ vim.keymap.set('n', '<TAB>', ':tabnext<CR>', { desc = 'Move to the next tab', no
 -- Harpoon
 local harpoon = require("harpoon")
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-vim.keymap.set("n", "<leader>A", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = 'Harpoon Menu', noremap=true})
-vim.keymap.set('n', '<M-">', function() harpoon:list():select(1) end, { desc = 'Harpoon Select-1', noremap=true})
-vim.keymap.set('n', '<M-«>', function() harpoon:list():select(2) end, { desc = 'Harpoon Select-2', noremap=true})
-vim.keymap.set('n', '<M-»>', function() harpoon:list():select(3) end, { desc = 'Harpoon Select-3', noremap=true})
-vim.keymap.set('n', '<M-(>', function() harpoon:list():select(4) end, { desc = 'Harpoon Select-4', noremap=true})
-vim.keymap.set('n', '<M-)>', function() harpoon:list():select(5) end, { desc = 'Harpoon Select-5', noremap=true})
-vim.keymap.set('n', '<M-@>', function() harpoon:list():select(6) end, { desc = 'Harpoon Select-6', noremap=true})
-vim.keymap.set('n', '<M-+>', function() harpoon:list():select(7) end, { desc = 'Harpoon Select-7', noremap=true})
-vim.keymap.set('n', '<M-->', function() harpoon:list():select(8) end, { desc = 'Harpoon Select-8', noremap=true})
-vim.keymap.set('n', '<M-/>', function() harpoon:list():select(9) end, { desc = 'Harpoon Select-9', noremap=true})
-vim.keymap.set('n', '<M-*>', function() harpoon:list():select(0) end, { desc = 'Harpoon Select-0', noremap=true})
+vim.keymap.set("n", "<leader>A", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+    { desc = 'Harpoon Menu', noremap = true })
+vim.keymap.set('n', '<M-">', function() harpoon:list():select(1) end, { desc = 'Harpoon Select-1', noremap = true })
+vim.keymap.set('n', '<M-«>', function() harpoon:list():select(2) end, { desc = 'Harpoon Select-2', noremap = true })
+vim.keymap.set('n', '<M-»>', function() harpoon:list():select(3) end, { desc = 'Harpoon Select-3', noremap = true })
+vim.keymap.set('n', '<M-(>', function() harpoon:list():select(4) end, { desc = 'Harpoon Select-4', noremap = true })
+vim.keymap.set('n', '<M-)>', function() harpoon:list():select(5) end, { desc = 'Harpoon Select-5', noremap = true })
+vim.keymap.set('n', '<M-@>', function() harpoon:list():select(6) end, { desc = 'Harpoon Select-6', noremap = true })
+vim.keymap.set('n', '<M-+>', function() harpoon:list():select(7) end, { desc = 'Harpoon Select-7', noremap = true })
+vim.keymap.set('n', '<M-->', function() harpoon:list():select(8) end, { desc = 'Harpoon Select-8', noremap = true })
+vim.keymap.set('n', '<M-/>', function() harpoon:list():select(9) end, { desc = 'Harpoon Select-9', noremap = true })
+vim.keymap.set('n', '<M-*>', function() harpoon:list():select(0) end, { desc = 'Harpoon Select-0', noremap = true })
 
 -- TODO shortcut for:
 -- 			- n (search next)
@@ -118,7 +164,7 @@ vim.keymap.set("n", "<F2>", ":split<CR>", {})
 vim.keymap.set("n", "<F3>", ":vsplit<CR>", {})
 vim.keymap.set("n", "<F4>", ":vsplit | vsplit <CR>", {})
 vim.keymap.set("n", "<F5>", ":wincmd = <CR>", {}) -- alias for "Ctrl-w = "
-vim.keymap.set("c", "à", "w", {}) -- ça marche mais interet d'une nouvelle touche w ?
+vim.keymap.set("c", "à", "w", {})                 -- ça marche mais interet d'une nouvelle touche w ?
 
 
 -- native shortcuts:
@@ -182,23 +228,3 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 --
-
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-})
-
--- vim.cmd.colorscheme "github_dark_default"
-
-
-
