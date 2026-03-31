@@ -2,21 +2,26 @@ return {
 	-- theme
 	{
 		-- "rose-pine/neovim",
+        "aliqyan-21/pomatia.nvim" -- très contrasté
+	},
+    {
+        "0x-ximon/acario.nvim" -- style emacs
+    },
+	{
+		"folke/tokyonight.nvim", -- trop violet ?
 	},
 	{
-		-- "folke/tokyonight.nvim",
+		"scottmckendry/cyberdream.nvim", -- ok
 	},
 	{
-		-- "scottmckendry/cyberdream.nvim",
-	},
-	{
-		-- "navarasu/onedark.nvim",
+		"navarasu/onedark.nvim",
 	},
 	{
 		-- "catppuccin/nvim",
-	},
+        "tiagovla/tokyodark.nvim"
+        },
 	{
-		"projekt0n/github-nvim-theme",
+		"projekt0n/github-nvim-theme", -- 1
 	},
 	{
 		-- "EdenEast/nightfox.nvim",
