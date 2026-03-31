@@ -1,3 +1,5 @@
+-- [[ Basic Autocommands ]]
+--  See `:help lua-guide-autocommands`
 
 local function augroup(name)
     return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
@@ -15,4 +17,27 @@ vim.api.nvim_create_autocmd("FileType", {
 	vim.opt_local.spell = true
     end,
 })
+
+-- Highlight when yanking (copying) text
+--  Try it with `yap` in normal mode
+--  See `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
+
+-- open help in vertical split
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "help",
+--     command = "wincmd L",
+-- })
+
+-- auto resize splits when the terminal's window is resized
+-- vim.api.nvim_create_autocmd("VimResized", {
+--     command = "wincmd = ",
+-- })
 
